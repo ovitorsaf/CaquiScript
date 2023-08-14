@@ -1,0 +1,29 @@
+start
+
+	int x, double y, double r;
+	
+	x = 3;
+	y = 5;
+	
+	r = 3 + 5 / 3;
+	write(' r é igual a 4.6 = ' + r);
+	
+	if (x > y){
+		write('I é menor que D');
+	} else {
+	
+		write('D maior que I');
+	}
+	
+	for (i = 0; i < 3; i++){
+		write('I é igual a = ' + i);
+	}
+	
+	w = 5;
+	while (w <= 5){
+		write('W é igual a ' + w);
+		w += 1;
+	}
+	
+	
+end;
