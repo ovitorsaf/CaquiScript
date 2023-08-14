@@ -9,10 +9,10 @@ start
 	write(' r é igual a 4.6 = ' + r);
 	
 	if (x > y){
-		write('I é menor que D');
+		write('X é maior que Y');
 	} else {
 	
-		write('D maior que I');
+		write('Y maior que X');
 	}
 	
 	for (i = 0; i < 3; i++){
