@@ -1,0 +1,10 @@
+start
+
+read(a);
+read(b);
+
+c = a + b / 23.4 + 7;
+
+write(c);
+
+end;
