@@ -1,5 +1,20 @@
 // Generated from .\CaquiScript.g4 by ANTLR 4.7.1
 package br.com.caquiscript.parser;
+ 
+	import br.com.caquiscript.datastructures.CaquiSymbol;
+	import br.com.caquiscript.datastructures.CaquiVariable;
+	import br.com.caquiscript.datastructures.CaquiSymbolTable;
+	import br.com.caquiscript.exceptions.CaquiSemanticException;
+	import br.com.caquiscript.ast.AbstractCommand;
+	import br.com.caquiscript.ast.CaquiProgram;
+	import br.com.caquiscript.ast.CommandLeitura;
+	import br.com.caquiscript.ast.CommandEscrita;
+	import br.com.caquiscript.ast.CommandAtribuicao;
+	import br.com.caquiscript.ast.CommandDecisao;
+
+	import java.util.ArrayList;
+	import java.util.Stack;
+
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -23,6 +38,54 @@ public class CaquiScriptBaseListener implements CaquiScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProg(CaquiScriptParser.ProgContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclaration(CaquiScriptParser.DeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclaration(CaquiScriptParser.DeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclvar(CaquiScriptParser.DeclvarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclvar(CaquiScriptParser.DeclvarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterType(CaquiScriptParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType(CaquiScriptParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterValue(CaquiScriptParser.ValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValue(CaquiScriptParser.ValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -83,6 +146,18 @@ public class CaquiScriptBaseListener implements CaquiScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCmdAttr(CaquiScriptParser.CmdAttrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIfStatement(CaquiScriptParser.IfStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfStatement(CaquiScriptParser.IfStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -3,6 +3,7 @@ package br.com.caquiscript.main;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import br.com.caquiscript.exceptions.CaquiSemanticException;
 import br.com.caquiscript.parser.CaquiScriptLexer;
 import br.com.caquiscript.parser.CaquiScriptParser;
 
@@ -23,6 +24,7 @@ public class MainClass {
 			
 			// Lê o arquivo input.caq, entrada p/ o analisador Lexico
 			lexer = new CaquiScriptLexer(CharStreams.fromFileName("input.caq"));
+			
 			// Cria um token para passar ao PARSER
 			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 			
@@ -32,9 +34,12 @@ public class MainClass {
 			
 			//executa o que está no input.caq
 			parser.prog();
+			System.out.println(">> COMPILADO COM SUCESSO <<");
+			parser.generateCode();
 			
-			
-			System.out.println("Compilado com sucesso");
+		}
+		catch (CaquiSemanticException er){
+			System.err.println("Semantic error -> " + er.getMessage());
 		}
 		catch (Exception er){
 			System.out.println("Erro -> "+ er.getMessage());

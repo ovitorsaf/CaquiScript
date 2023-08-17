@@ -1,10 +1,22 @@
 start
 
+int a;
+double b;
+string t1;
+
 read(a);
 read(b);
 
-c = a + b / 23.4 + 7;
+a = 1 + 2 * 3 / b;
 
-write(c);
+if (a > b)
+{
+	write(t1);	
+}
+else {
+	write(x);
+}
+
+write("cleinice");
 
 end;

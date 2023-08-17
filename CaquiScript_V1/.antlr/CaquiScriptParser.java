@@ -1,5 +1,4 @@
-// Generated from .\CaquiScript.g4 by ANTLR 4.7.1
-package br.com.caquiscript.parser;
+// Generated from c:\Users\gates\git\repository\CaquiScript_V1\CaquiScript.g4 by ANTLR 4.9.2
  
 	import br.com.caquiscript.datastructures.CaquiSymbol;
 	import br.com.caquiscript.datastructures.CaquiVariable;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class CaquiScriptParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.7.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.9.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -39,21 +38,30 @@ public class CaquiScriptParser extends Parser {
 		RULE_prog = 0, RULE_declaration = 1, RULE_declvar = 2, RULE_type = 3, 
 		RULE_value = 4, RULE_bloco = 5, RULE_cmd = 6, RULE_cmdLeitura = 7, RULE_cmdEscrita = 8, 
 		RULE_cmdAttr = 9, RULE_ifStatement = 10, RULE_expr = 11, RULE_termo = 12;
-	public static final String[] ruleNames = {
-		"prog", "declaration", "declvar", "type", "value", "bloco", "cmd", "cmdLeitura", 
-		"cmdEscrita", "cmdAttr", "ifStatement", "expr", "termo"
-	};
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"prog", "declaration", "declvar", "type", "value", "bloco", "cmd", "cmdLeitura", 
+			"cmdEscrita", "cmdAttr", "ifStatement", "expr", "termo"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "'start'", "'end'", "'int'", "'double'", "'string'", "'read'", "'write'", 
-		"'if'", "'else'", "'('", "')'", "';'", "'{'", "'}'", null, "','", null, 
-		"'='"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, null, null, null, "AP", "FP", 
-		"SC", "AC", "FC", "OP", "VI", "OPREL", "ATTR", "ID", "NUMBER", "INT", 
-		"DOUBLE", "STRING", "WS"
-	};
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, "'start'", "'end'", "'int'", "'double'", "'string'", "'read'", 
+			"'write'", "'if'", "'else'", "'('", "')'", "';'", "'{'", "'}'", null, 
+			"','", null, "'='"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, null, null, null, null, null, null, null, null, null, "AP", "FP", 
+			"SC", "AC", "FC", "OP", "VI", "OPREL", "ATTR", "ID", "NUMBER", "INT", 
+			"DOUBLE", "STRING", "WS"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
@@ -139,6 +147,7 @@ public class CaquiScriptParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
+
 	public static class ProgContext extends ParserRuleContext {
 		public BlocoContext bloco() {
 			return getRuleContext(BlocoContext.class,0);
@@ -150,14 +159,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_prog; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterProg(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitProg(this);
-		}
 	}
 
 	public final ProgContext prog() throws RecognitionException {
@@ -211,14 +212,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_declaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitDeclaration(this);
-		}
 	}
 
 	public final DeclarationContext declaration() throws RecognitionException {
@@ -272,14 +265,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_declvar; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterDeclvar(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitDeclvar(this);
-		}
 	}
 
 	public final DeclvarContext declvar() throws RecognitionException {
@@ -353,14 +338,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_type; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterType(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitType(this);
-		}
 	}
 
 	public final TypeContext type() throws RecognitionException {
@@ -417,14 +394,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_value; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterValue(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitValue(this);
-		}
 	}
 
 	public final ValueContext value() throws RecognitionException {
@@ -468,14 +437,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bloco; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterBloco(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitBloco(this);
-		}
 	}
 
 	public final BlocoContext bloco() throws RecognitionException {
@@ -532,14 +493,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_cmd; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterCmd(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitCmd(this);
-		}
 	}
 
 	public final CmdContext cmd() throws RecognitionException {
@@ -601,14 +554,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_cmdLeitura; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterCmdLeitura(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitCmdLeitura(this);
-		}
 	}
 
 	public final CmdLeituraContext cmdLeitura() throws RecognitionException {
@@ -676,14 +621,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_cmdEscrita; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterCmdEscrita(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitCmdEscrita(this);
-		}
 	}
 
 	public final CmdEscritaContext cmdEscrita() throws RecognitionException {
@@ -771,14 +708,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_cmdAttr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterCmdAttr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitCmdAttr(this);
-		}
 	}
 
 	public final CmdAttrContext cmdAttr() throws RecognitionException {
@@ -849,14 +778,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ifStatement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterIfStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitIfStatement(this);
-		}
 	}
 
 	public final IfStatementContext ifStatement() throws RecognitionException {
@@ -999,14 +920,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitExpr(this);
-		}
 	}
 
 	public final ExprContext expr() throws RecognitionException {
@@ -1057,14 +970,6 @@ public class CaquiScriptParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_termo; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).enterTermo(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CaquiScriptListener ) ((CaquiScriptListener)listener).exitTermo(this);
-		}
 	}
 
 	public final TermoContext termo() throws RecognitionException {

@@ -1,5 +1,20 @@
 // Generated from .\CaquiScript.g4 by ANTLR 4.7.1
 package br.com.caquiscript.parser;
+ 
+	import br.com.caquiscript.datastructures.CaquiSymbol;
+	import br.com.caquiscript.datastructures.CaquiVariable;
+	import br.com.caquiscript.datastructures.CaquiSymbolTable;
+	import br.com.caquiscript.exceptions.CaquiSemanticException;
+	import br.com.caquiscript.ast.AbstractCommand;
+	import br.com.caquiscript.ast.CaquiProgram;
+	import br.com.caquiscript.ast.CommandLeitura;
+	import br.com.caquiscript.ast.CommandEscrita;
+	import br.com.caquiscript.ast.CommandAtribuicao;
+	import br.com.caquiscript.ast.CommandDecisao;
+
+	import java.util.ArrayList;
+	import java.util.Stack;
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -17,6 +32,46 @@ public interface CaquiScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitProg(CaquiScriptParser.ProgContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CaquiScriptParser#declaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclaration(CaquiScriptParser.DeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CaquiScriptParser#declaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclaration(CaquiScriptParser.DeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CaquiScriptParser#declvar}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclvar(CaquiScriptParser.DeclvarContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CaquiScriptParser#declvar}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclvar(CaquiScriptParser.DeclvarContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CaquiScriptParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(CaquiScriptParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CaquiScriptParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(CaquiScriptParser.TypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CaquiScriptParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterValue(CaquiScriptParser.ValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CaquiScriptParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitValue(CaquiScriptParser.ValueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CaquiScriptParser#bloco}.
 	 * @param ctx the parse tree
@@ -67,6 +122,16 @@ public interface CaquiScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmdAttr(CaquiScriptParser.CmdAttrContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CaquiScriptParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfStatement(CaquiScriptParser.IfStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CaquiScriptParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfStatement(CaquiScriptParser.IfStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CaquiScriptParser#expr}.
 	 * @param ctx the parse tree
