@@ -1,0 +1,7 @@
+- Terminar o FOR;
+- Verificar se a variável foi declarada e não foi usada
+- Verificar se uma variável está sendo usada sem ter valor inicial
+- Inserção de Operadores lógicos
+- Geração de várias linguagens-alvo (C ou Python)
+- Avaliador de expressões aritméticas
+- Editor Highlight (simulando uma pequena IDE)

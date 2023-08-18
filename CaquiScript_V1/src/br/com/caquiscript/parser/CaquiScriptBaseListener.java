@@ -11,7 +11,10 @@ package br.com.caquiscript.parser;
 	import br.com.caquiscript.ast.CommandEscrita;
 	import br.com.caquiscript.ast.CommandAtribuicao;
 	import br.com.caquiscript.ast.CommandDecisao;
-
+	import br.com.caquiscript.ast.CommandWhile;
+	import br.com.caquiscript.ast.CommandDeclVar;
+	import br.com.caquiscript.ast.CommandFor;
+	
 	import java.util.ArrayList;
 	import java.util.Stack;
 
@@ -158,6 +161,42 @@ public class CaquiScriptBaseListener implements CaquiScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIfStatement(CaquiScriptParser.IfStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWhileLoop(CaquiScriptParser.WhileLoopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhileLoop(CaquiScriptParser.WhileLoopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForLoop(CaquiScriptParser.ForLoopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForLoop(CaquiScriptParser.ForLoopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOutputArgs(CaquiScriptParser.OutputArgsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOutputArgs(CaquiScriptParser.OutputArgsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

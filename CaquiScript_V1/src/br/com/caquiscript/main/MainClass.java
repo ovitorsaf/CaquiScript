@@ -3,6 +3,7 @@ package br.com.caquiscript.main;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import br.com.caquiscript.datastructures.CaquiVariable;
 import br.com.caquiscript.exceptions.CaquiSemanticException;
 import br.com.caquiscript.parser.CaquiScriptLexer;
 import br.com.caquiscript.parser.CaquiScriptParser;
@@ -36,6 +37,7 @@ public class MainClass {
 			parser.prog();
 			System.out.println(">> COMPILADO COM SUCESSO <<");
 			parser.generateCode();
+			
 			
 		}
 		catch (CaquiSemanticException er){

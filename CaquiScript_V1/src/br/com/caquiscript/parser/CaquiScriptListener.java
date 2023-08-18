@@ -11,7 +11,10 @@ package br.com.caquiscript.parser;
 	import br.com.caquiscript.ast.CommandEscrita;
 	import br.com.caquiscript.ast.CommandAtribuicao;
 	import br.com.caquiscript.ast.CommandDecisao;
-
+	import br.com.caquiscript.ast.CommandWhile;
+	import br.com.caquiscript.ast.CommandDeclVar;
+	import br.com.caquiscript.ast.CommandFor;
+	
 	import java.util.ArrayList;
 	import java.util.Stack;
 
@@ -132,6 +135,36 @@ public interface CaquiScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIfStatement(CaquiScriptParser.IfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CaquiScriptParser#whileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileLoop(CaquiScriptParser.WhileLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CaquiScriptParser#whileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileLoop(CaquiScriptParser.WhileLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CaquiScriptParser#forLoop}.
+	 * @param ctx the parse tree
+	 */
+	void enterForLoop(CaquiScriptParser.ForLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CaquiScriptParser#forLoop}.
+	 * @param ctx the parse tree
+	 */
+	void exitForLoop(CaquiScriptParser.ForLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CaquiScriptParser#outputArgs}.
+	 * @param ctx the parse tree
+	 */
+	void enterOutputArgs(CaquiScriptParser.OutputArgsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CaquiScriptParser#outputArgs}.
+	 * @param ctx the parse tree
+	 */
+	void exitOutputArgs(CaquiScriptParser.OutputArgsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CaquiScriptParser#expr}.
 	 * @param ctx the parse tree

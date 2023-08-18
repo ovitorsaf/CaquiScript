@@ -3,6 +3,7 @@ package br.com.caquiscript.datastructures;
 public abstract class CaquiSymbol {
 	
 	protected String name;
+	protected String value;
 
 	public abstract String generateJavaCode();
 	
@@ -14,13 +15,21 @@ public abstract class CaquiSymbol {
 		this.name = name;
 	}
 	
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 	public String getName() {
 		return name;
 	}
 	
 	@Override
-	public String toString(){
-		return "CaquiSymbol [name=" + name + "]";
+	public String toString() {
+		return "CaquiSymbol [name=" + name + ", value=" + value + "]";
 	}
 	
 }

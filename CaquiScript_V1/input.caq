@@ -1,22 +1,46 @@
 start
 
-int a;
-double b;
-string t1;
+	int a;
+	double b;
+	string t1, x;
+	string texto = "meu texto";
 
-read(a);
-read(b);
-
-a = 1 + 2 * 3 / b;
-
-if (a > b)
-{
-	write(t1);	
-}
-else {
-	write(x);
-}
-
-write("cleinice");
-
+	read(a);
+	read(b);
+	
+	a = 1 + 2 * 3 / b;
+	
+	if (a > b)
+	{
+		double xxx;
+		xxx = 0.287;
+		double bala = 1.99;
+		bala = 1.99;
+		write(t1);	
+	}
+	else {
+		write(x);
+		string saulo = "saulo";
+	}
+	
+	write(a + b);
+	
+	write(20);
+	
+	write("macaxeira");
+	
+	write("resultado :", a);
+	
+	
+	while (a < b){
+		string abc;
+		abc = 50;
+		write("dentro do while" + abc);
+	}
+	
+	
+	for(int yy = 1; yy < 20; yy++){
+		write(yy);
+	}
+	
 end;

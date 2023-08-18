@@ -38,10 +38,10 @@ public class CaquiVariable extends CaquiSymbol{
 	public String generateJavaCode() {
 		String str;
 		if(type == INT) {
-			str = "Integer ";
+			str = "int ";
 		}
 		else if (type == DOUBLE) {
-			str = "Double ";
+			str = "double ";
 		}
 		else {
 			str = "String ";
