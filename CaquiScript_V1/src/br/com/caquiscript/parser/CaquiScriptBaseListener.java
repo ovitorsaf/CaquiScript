@@ -17,6 +17,8 @@ package br.com.caquiscript.parser;
 	
 	import java.util.ArrayList;
 	import java.util.Stack;
+	import java.util.HashSet;
+	import java.util.Set;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -221,6 +223,18 @@ public class CaquiScriptBaseListener implements CaquiScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTermo(CaquiScriptParser.TermoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCheckVars(CaquiScriptParser.CheckVarsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCheckVars(CaquiScriptParser.CheckVarsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

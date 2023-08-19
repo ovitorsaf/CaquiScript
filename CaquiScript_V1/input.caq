@@ -5,6 +5,8 @@ start
 	string t1, x;
 	string texto = "meu texto";
 	texto = "meeeu texto";
+	
+	int naoVaiSerUsada;
 
 	read(a);
 	read(b);

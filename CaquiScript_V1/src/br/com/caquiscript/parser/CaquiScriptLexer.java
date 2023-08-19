@@ -17,6 +17,8 @@ package br.com.caquiscript.parser;
 	
 	import java.util.ArrayList;
 	import java.util.Stack;
+	import java.util.HashSet;
+	import java.util.Set;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -106,7 +108,7 @@ public class CaquiScriptLexer extends Lexer {
 		private CaquiProgram program = new CaquiProgram();
 		private ArrayList<AbstractCommand> curThread;
 		private Stack<ArrayList<AbstractCommand>> stack = new Stack<ArrayList<AbstractCommand>>();	
-		
+
 		private String _readID;
 		private String _writeID;
 		private String _exprID;
@@ -128,6 +130,11 @@ public class CaquiScriptLexer extends Lexer {
 		private ArrayList<AbstractCommand> commandsWhile;
 		
 		private ArrayList<AbstractCommand> commandsFor;
+
+		 
+		Set<String> declaredVariables = new HashSet<String>();
+	    Set<String> usedVariables = new HashSet<String>();
+
 
 		public void verificaID(String id){
 			if (!symbolTable.exists(id)){
@@ -198,7 +205,6 @@ public class CaquiScriptLexer extends Lexer {
 				return "String";
 			}
 		}
-		
 		
 
 

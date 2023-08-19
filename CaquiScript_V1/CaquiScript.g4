@@ -17,6 +17,8 @@ grammar CaquiScript;
 	
 	import java.util.ArrayList;
 	import java.util.Stack;
+	import java.util.HashSet;
+	import java.util.Set;
 }
 
 @members{ 
@@ -28,7 +30,7 @@ grammar CaquiScript;
 	private CaquiProgram program = new CaquiProgram();
 	private ArrayList<AbstractCommand> curThread;
 	private Stack<ArrayList<AbstractCommand>> stack = new Stack<ArrayList<AbstractCommand>>();	
-	
+
 	private String _readID;
 	private String _writeID;
 	private String _exprID;
@@ -50,6 +52,11 @@ grammar CaquiScript;
 	private ArrayList<AbstractCommand> commandsWhile;
 	
 	private ArrayList<AbstractCommand> commandsFor;
+
+	 
+	Set<String> declaredVariables = new HashSet<String>();
+    Set<String> usedVariables = new HashSet<String>();
+
 
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
@@ -121,10 +128,10 @@ grammar CaquiScript;
 		}
 	}
 	
-	
 }
 
-prog	: 'start' declaration? bloco 'end'
+
+prog	: 'start' declaration? bloco checkVars 'end'
 		  { 
 		  	program.setVarTable(symbolTable);
 		  	program.setComandos(stack.pop()); 
@@ -143,6 +150,10 @@ declvar	: type ID {
 							System.out.println("Simbolo adicionado -> " + symbol);
 							setDeclVarName(_varName);
 							setDeclVarType(_tipo);
+							
+							//Adiciona variável para varíaveis declaradas
+            				declaredVariables.add(getDeclVarName());
+							System.out.println("Declaração Adicionada -> " + getDeclVarType() + " " + getDeclVarName());
 		
 						}
 						else {
@@ -199,6 +210,10 @@ declvar	: type ID {
 						System.out.println("Simbolo adicionado -> " + symbol);
 						setDeclVarName(_varName);
 						setDeclVarType(_tipo);
+
+						//Adiciona variável para varíaveis declaradas
+						declaredVariables.add(getDeclVarName());
+						System.out.println("Declaração Adicionada -> " + getDeclVarType() + " " + getDeclVarName());
 						
 					}
 					else {
@@ -239,6 +254,9 @@ cmdLeitura : 'read' AP
 						verificaID(_input.LT(-1).getText()); 
 						_readID = _input.LT(-1).getText();
 						System.out.println("ID -> " + _readID);
+						
+						//Add variavel no usedVariables		
+						usedVariables.add(_input.LT(-1).getText());
 					} 
 					FP 
 					SC
@@ -260,6 +278,9 @@ cmdEscrita : 'write' AP
 						  	System.out.println("writeln -> _writeID = " + _writeID);
 							stack.peek().add(cmd);
 						}
+						
+						//Add variavel no usedVariables		
+						usedVariables.add(_input.LT(-1).getText());
 					}
 			  	| NUMBER
 			  	{
@@ -282,6 +303,9 @@ cmdEscrita : 'write' AP
 cmdAttr	:
 		ID { verificaID(_input.LT(-1).getText()); 
 			   _exprID = _input.LT(-1).getText();
+			   
+			   //Add variavel no usedVariables
+			   usedVariables.add(_input.LT(-1).getText());
 			 } 
 		ATTR { _exprContent = ""; } 
 		expr SC
@@ -474,6 +498,9 @@ expr	: termo
 		  {
 		  	_writeString = _input.LT(-1).getText();
 		  	System.out.println("expr -> termo_1 -> _writeString = " + _writeString);
+		  	
+		  	//Add variavel no usedVariables		
+			usedVariables.add(_input.LT(-1).getText());
 		  }
 		 ( 
 		 (SUM | SUB | MULT | DIV)
@@ -486,14 +513,22 @@ expr	: termo
 	     	 {
 	     	 	_writeString += _input.LT(-1).getText();
 	     	 	System.out.println("expr -> termo_3 -> _writeString = " + _writeString);
+	     	 	
+	     	 	//Add variavel no usedVariables		
+				usedVariables.add(_input.LT(-1).getText());
 	     	 }
      	 )?
      	 { setExprString(_writeString); }
 		;
 		
-termo	: 	ID { verificaID(_input.LT(-1).getText()); 
-				_exprContent += _input.LT(-1).getText();
-			 } 
+termo	: 	ID 
+				{ 
+					verificaID(_input.LT(-1).getText()); 
+					_exprContent += _input.LT(-1).getText();
+
+					// Em qualquer referência a uma variável, adicione-a ao conjunto de variáveis usadas
+					//usedVariables.add(_input.LT(-1).getText());
+			 	} 
 			| NUMBER { _exprContent += _input.LT(-1).getText(); }
 			| STRING { _exprContent += _input.LT(-1).getText(); }
 		;
@@ -505,6 +540,18 @@ factor	: ID { verificaID(_input.LT(-1).getText());
 		| STRING { _exprContent += _input.LT(-1).getText(); }
 		;
 */
+
+checkVars	: 
+			{
+				System.out.println("EXECUTANDO CHECKVARS");
+	    
+			    declaredVariables.removeAll(usedVariables);
+			    
+			    for(String var : declaredVariables) {
+			        System.out.println("ALERTA: Variável " + var + " foi declarada mas não foi usada.");
+			    }
+			}
+			;
 
 SC	: ';'
 	;

@@ -7,6 +7,7 @@ int  forvariable;
 int  a;
 double  b;
 String  abc;
+int  naoVaiSerUsada;
 String  x;
 String  saulo;
 double  xxx;

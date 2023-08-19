@@ -17,6 +17,8 @@ package br.com.caquiscript.parser;
 	
 	import java.util.ArrayList;
 	import java.util.Stack;
+	import java.util.HashSet;
+	import java.util.Set;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -185,4 +187,14 @@ public interface CaquiScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTermo(CaquiScriptParser.TermoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CaquiScriptParser#checkVars}.
+	 * @param ctx the parse tree
+	 */
+	void enterCheckVars(CaquiScriptParser.CheckVarsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CaquiScriptParser#checkVars}.
+	 * @param ctx the parse tree
+	 */
+	void exitCheckVars(CaquiScriptParser.CheckVarsContext ctx);
 }
