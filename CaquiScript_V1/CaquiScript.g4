@@ -48,6 +48,8 @@ grammar CaquiScript;
 	private ArrayList<AbstractCommand> listaTrue;
 	private ArrayList<AbstractCommand> listaFalse;
 	private ArrayList<AbstractCommand> commandsWhile;
+	
+	private ArrayList<AbstractCommand> commandsFor;
 
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
@@ -277,12 +279,13 @@ cmdEscrita : 'write' AP
 			;
 
 
-cmdAttr	: ID { verificaID(_input.LT(-1).getText()); 
+cmdAttr	:
+		ID { verificaID(_input.LT(-1).getText()); 
 			   _exprID = _input.LT(-1).getText();
 			 } 
 		ATTR { _exprContent = ""; } 
 		expr SC
-		{
+		{	
 			CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);
 			stack.peek().add(cmd);
 		}
@@ -361,7 +364,7 @@ whileLoop	: 'while' AP
 					  			System.out.println("while -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
 					  			CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
 					  			stack.peek().add(dclvar);
-					  		} 
+					  		}
 					  	)?
 					  	(cmd)+
 					  FC
@@ -375,46 +378,55 @@ whileLoop	: 'while' AP
 			
 forLoop	: 'for' 
 		  AP 
-		  	(declvar)
+		  	(declvar) 
 		  	{
-		  		System.out.println("for -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
-	  			_forInitialVar = getDeclVarType() + " " + getDeclVarName();
-		  	} 
+		  		System.out.println("for -> Declaração = " + getDeclVarType() + " " + getDeclVarName() + " = " + getDeclVarValue());
+	  			_forInitialVar = getDeclVarType() + " " + getDeclVarName() + " = " + getDeclVarValue();
+		  	}
 		  	SC 
-		  	(termo 
+		  	(ID 
 		  	{
-		  		System.out.println("for -> Termo_1 = " + _input.LT(-1).getText());
-		  		_forCondition = _input.LT(-1).getText();
+		  		_exprDecision = _input.LT(-1).getText();
 		  	}
 		  	OPREL
 		  	{
 		  		System.out.println("for -> OP_REL = " + _input.LT(-1).getText());
-		  		_forCondition += _input.LT(-1).getText();
+		  		_exprDecision += _input.LT(-1).getText();
 		  	} 
 		  	termo
 		  	{
 		  		System.out.println("for -> Termo_2 = " + _input.LT(-1).getText());
-		  		_forCondition += _input.LT(-1).getText();
-		  		System.out.println("for -> _forCondition = " + _forCondition);
+		  		_exprDecision += _input.LT(-1).getText();
 		  	}) SC 
 		  	(ID 
 		  	{
-		  		System.out.println("for -> ID_INCR = " + _input.LT(-1).getText());
 		  		_forIncrement = _input.LT(-1).getText();
 		  	}
 		  	OPINC
 		  	{
 		  		System.out.println("for -> OP_INCR = " + _input.LT(-1).getText());
 		  		_forIncrement += _input.LT(-1).getText();
-		  		System.out.println("for -> _forIncrement = " + _forIncrement);
 		  	}) 
 		  FP 
 		  AC 
+		  	{ 
+			   	curThread = new ArrayList<AbstractCommand>(); 
+			   	stack.push(curThread);	
+		   	}
 		  	(declvar)?
-		  	(cmd)+
+		  	{
+				//System.out.println("for -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
+				//CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
+				//stack.peek().add(dclvar);
+			}
+		  	(cmd)+ 
 		  FC
+		  {
+		   	commandsFor = stack.pop();
+		   	CommandFor cmd = new CommandFor(_forInitialVar, _exprDecision, _forIncrement, commandsFor);
+			stack.peek().add(cmd);
+		  }
 		;
-		
 
 outputArgs	: STRING 
 			  {
@@ -461,28 +473,38 @@ outputArgs	: STRING
 expr	: termo
 		  {
 		  	_writeString = _input.LT(-1).getText();
-		  	System.out.println("expr -> termo -> _writeString = " + _writeString);
+		  	System.out.println("expr -> termo_1 -> _writeString = " + _writeString);
 		  }
-		 ( (SUM | SUB | MULT | DIV)
-		 { 
-		 	_writeString += _input.LT(-1).getText(); 
-		 	System.out.println("expr -> termo -> OP -> _writeString = " + _writeString);
-		 	_exprContent += _input.LT(-1).getText(); 
-		 } 
+		 ( 
+		 (SUM | SUB | MULT | DIV)
+			 { 
+			 	_writeString += _input.LT(-1).getText(); 
+			 	System.out.println("expr -> termo_2 -> OP -> _writeString = " + _writeString);
+			 	_exprContent += _input.LT(-1).getText(); 
+			 } 
      	 termo
-     	 {
-     	 	_writeString += _input.LT(-1).getText();
-     	 	System.out.println("expr -> termo -> _writeString = " + _writeString);
-     	 } 
-     	 )*
+	     	 {
+	     	 	_writeString += _input.LT(-1).getText();
+	     	 	System.out.println("expr -> termo_3 -> _writeString = " + _writeString);
+	     	 }
+     	 )?
      	 { setExprString(_writeString); }
 		;
 		
-termo	: ID { verificaID(_input.LT(-1).getText()); 
+termo	: 	ID { verificaID(_input.LT(-1).getText()); 
+				_exprContent += _input.LT(-1).getText();
+			 } 
+			| NUMBER { _exprContent += _input.LT(-1).getText(); }
+			| STRING { _exprContent += _input.LT(-1).getText(); }
+		;
+/*		
+factor	: ID { verificaID(_input.LT(-1).getText()); 
 			 	_exprContent += _input.LT(-1).getText();
 			 } 
 		| NUMBER { _exprContent += _input.LT(-1).getText(); }
+		| STRING { _exprContent += _input.LT(-1).getText(); }
 		;
+*/
 
 SC	: ';'
 	;

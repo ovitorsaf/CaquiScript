@@ -126,6 +126,8 @@ public class CaquiScriptLexer extends Lexer {
 		private ArrayList<AbstractCommand> listaTrue;
 		private ArrayList<AbstractCommand> listaFalse;
 		private ArrayList<AbstractCommand> commandsWhile;
+		
+		private ArrayList<AbstractCommand> commandsFor;
 
 		public void verificaID(String id){
 			if (!symbolTable.exists(id)){

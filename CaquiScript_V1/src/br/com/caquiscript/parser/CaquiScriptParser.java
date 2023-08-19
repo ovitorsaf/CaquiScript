@@ -134,6 +134,8 @@ public class CaquiScriptParser extends Parser {
 		private ArrayList<AbstractCommand> listaTrue;
 		private ArrayList<AbstractCommand> listaFalse;
 		private ArrayList<AbstractCommand> commandsWhile;
+		
+		private ArrayList<AbstractCommand> commandsFor;
 
 		public void verificaID(String id){
 			if (!symbolTable.exists(id)){
@@ -1010,7 +1012,7 @@ public class CaquiScriptParser extends Parser {
 			expr();
 			setState(125);
 			match(SC);
-
+				
 						CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);
 						stack.peek().add(cmd);
 					
@@ -1252,6 +1254,7 @@ public class CaquiScriptParser extends Parser {
 			switch (_input.LA(1)) {
 			case ID:
 			case NUMBER:
+			case STRING:
 				{
 				setState(169);
 				termo();
@@ -1359,14 +1362,14 @@ public class CaquiScriptParser extends Parser {
 		public DeclvarContext declvar(int i) {
 			return getRuleContext(DeclvarContext.class,i);
 		}
-		public List<TermoContext> termo() {
-			return getRuleContexts(TermoContext.class);
-		}
-		public TermoContext termo(int i) {
-			return getRuleContext(TermoContext.class,i);
+		public List<TerminalNode> ID() { return getTokens(CaquiScriptParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(CaquiScriptParser.ID, i);
 		}
 		public TerminalNode OPREL() { return getToken(CaquiScriptParser.OPREL, 0); }
-		public TerminalNode ID() { return getToken(CaquiScriptParser.ID, 0); }
+		public TermoContext termo() {
+			return getRuleContext(TermoContext.class,0);
+		}
 		public TerminalNode OPINC() { return getToken(CaquiScriptParser.OPINC, 0); }
 		public List<CmdContext> cmd() {
 			return getRuleContexts(CmdContext.class);
@@ -1404,30 +1407,28 @@ public class CaquiScriptParser extends Parser {
 			declvar();
 			}
 
-					  		System.out.println("for -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
-				  			_forInitialVar = getDeclVarType() + " " + getDeclVarName();
+					  		System.out.println("for -> Declaração = " + getDeclVarType() + " " + getDeclVarName() + " = " + getDeclVarValue());
+				  			_forInitialVar = getDeclVarType() + " " + getDeclVarName() + " = " + getDeclVarValue();
 					  	
 			setState(200);
 			match(SC);
 			{
 			setState(201);
-			termo();
+			match(ID);
 
-					  		System.out.println("for -> Termo_1 = " + _input.LT(-1).getText());
-					  		_forCondition = _input.LT(-1).getText();
+					  		_exprDecision = _input.LT(-1).getText();
 					  	
 			setState(203);
 			match(OPREL);
 
 					  		System.out.println("for -> OP_REL = " + _input.LT(-1).getText());
-					  		_forCondition += _input.LT(-1).getText();
+					  		_exprDecision += _input.LT(-1).getText();
 					  	
 			setState(205);
 			termo();
 
 					  		System.out.println("for -> Termo_2 = " + _input.LT(-1).getText());
-					  		_forCondition += _input.LT(-1).getText();
-					  		System.out.println("for -> _forCondition = " + _forCondition);
+					  		_exprDecision += _input.LT(-1).getText();
 					  	
 			}
 			setState(208);
@@ -1436,7 +1437,6 @@ public class CaquiScriptParser extends Parser {
 			setState(209);
 			match(ID);
 
-					  		System.out.println("for -> ID_INCR = " + _input.LT(-1).getText());
 					  		_forIncrement = _input.LT(-1).getText();
 					  	
 			setState(211);
@@ -1444,39 +1444,52 @@ public class CaquiScriptParser extends Parser {
 
 					  		System.out.println("for -> OP_INCR = " + _input.LT(-1).getText());
 					  		_forIncrement += _input.LT(-1).getText();
-					  		System.out.println("for -> _forIncrement = " + _forIncrement);
 					  	
 			}
 			setState(214);
 			match(FP);
 			setState(215);
 			match(AC);
-			setState(217);
+			 
+						   	curThread = new ArrayList<AbstractCommand>(); 
+						   	stack.push(curThread);	
+					   	
+			setState(218);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
 			case 1:
 				{
-				setState(216);
+				setState(217);
 				declvar();
 				}
 				break;
 			}
-			setState(220); 
+
+							//System.out.println("for -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
+							//CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
+							//stack.peek().add(dclvar);
+						
+			setState(222); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(219);
+				setState(221);
 				cmd();
 				}
 				}
-				setState(222); 
+				setState(224); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__7) | (1L << T__9) | (1L << T__10) | (1L << ID))) != 0) );
-			setState(224);
+			setState(226);
 			match(FC);
+
+					   	commandsFor = stack.pop();
+					   	CommandFor cmd = new CommandFor(_forInitialVar, _exprDecision, _forIncrement, commandsFor);
+						stack.peek().add(cmd);
+					  
 			}
 		}
 		catch (RecognitionException re) {
@@ -1518,13 +1531,13 @@ public class CaquiScriptParser extends Parser {
 		enterRule(_localctx, 26, RULE_outputArgs);
 		int _la;
 		try {
-			setState(245);
+			setState(248);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(226);
+				setState(229);
 				match(STRING);
 
 							  	_writeString = _input.LT(-1).getText();
@@ -1537,24 +1550,24 @@ public class CaquiScriptParser extends Parser {
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(228);
+				setState(231);
 				match(STRING);
 
 							  	_writeString = _input.LT(-1).getText();
 							  	System.out.println("_writeString = " + _writeString);
 							  
-				setState(235);
+				setState(238);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==VI) {
 					{
-					setState(230);
+					setState(233);
 					match(VI);
 
 								  	_writeString += ", ";
 								  	System.out.println("_writeString = " + _writeString);
 								  
-					setState(232);
+					setState(235);
 					termo();
 
 								  	System.out.println("writeln -> termo = " + _input.LT(-1).getText());
@@ -1563,18 +1576,18 @@ public class CaquiScriptParser extends Parser {
 					}
 				}
 
-				setState(242);
+				setState(245);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==SUM) {
 					{
-					setState(237);
+					setState(240);
 					match(SUM);
 
 								  	_writeString += " + ";
 								  	System.out.println("_writeString = " + _writeString);
 								  
-					setState(239);
+					setState(242);
 					termo();
 
 								  	System.out.println("writeln -> termo = " + _input.LT(-1).getText());
@@ -1610,22 +1623,10 @@ public class CaquiScriptParser extends Parser {
 		public TermoContext termo(int i) {
 			return getRuleContext(TermoContext.class,i);
 		}
-		public List<TerminalNode> SUM() { return getTokens(CaquiScriptParser.SUM); }
-		public TerminalNode SUM(int i) {
-			return getToken(CaquiScriptParser.SUM, i);
-		}
-		public List<TerminalNode> SUB() { return getTokens(CaquiScriptParser.SUB); }
-		public TerminalNode SUB(int i) {
-			return getToken(CaquiScriptParser.SUB, i);
-		}
-		public List<TerminalNode> MULT() { return getTokens(CaquiScriptParser.MULT); }
-		public TerminalNode MULT(int i) {
-			return getToken(CaquiScriptParser.MULT, i);
-		}
-		public List<TerminalNode> DIV() { return getTokens(CaquiScriptParser.DIV); }
-		public TerminalNode DIV(int i) {
-			return getToken(CaquiScriptParser.DIV, i);
-		}
+		public TerminalNode SUM() { return getToken(CaquiScriptParser.SUM, 0); }
+		public TerminalNode SUB() { return getToken(CaquiScriptParser.SUB, 0); }
+		public TerminalNode MULT() { return getToken(CaquiScriptParser.MULT, 0); }
+		public TerminalNode DIV() { return getToken(CaquiScriptParser.DIV, 0); }
 		public ExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1647,19 +1648,18 @@ public class CaquiScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(247);
+			setState(250);
 			termo();
 
 					  	_writeString = _input.LT(-1).getText();
-					  	System.out.println("expr -> termo -> _writeString = " + _writeString);
+					  	System.out.println("expr -> termo_1 -> _writeString = " + _writeString);
 					  
-			setState(256);
+			setState(257);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUM) | (1L << SUB) | (1L << MULT) | (1L << DIV))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUM) | (1L << SUB) | (1L << MULT) | (1L << DIV))) != 0)) {
 				{
-				{
-				setState(249);
+				setState(252);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUM) | (1L << SUB) | (1L << MULT) | (1L << DIV))) != 0)) ) {
 				_errHandler.recoverInline(this);
@@ -1670,22 +1670,19 @@ public class CaquiScriptParser extends Parser {
 					consume();
 				}
 				 
-						 	_writeString += _input.LT(-1).getText(); 
-						 	System.out.println("expr -> termo -> OP -> _writeString = " + _writeString);
-						 	_exprContent += _input.LT(-1).getText(); 
-						 
-				setState(251);
+							 	_writeString += _input.LT(-1).getText(); 
+							 	System.out.println("expr -> termo_2 -> OP -> _writeString = " + _writeString);
+							 	_exprContent += _input.LT(-1).getText(); 
+							 
+				setState(254);
 				termo();
 
-				     	 	_writeString += _input.LT(-1).getText();
-				     	 	System.out.println("expr -> termo -> _writeString = " + _writeString);
-				     	 
+					     	 	_writeString += _input.LT(-1).getText();
+					     	 	System.out.println("expr -> termo_3 -> _writeString = " + _writeString);
+					     	 
 				}
-				}
-				setState(258);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
 			}
+
 			 setExprString(_writeString); 
 			}
 		}
@@ -1703,6 +1700,7 @@ public class CaquiScriptParser extends Parser {
 	public static class TermoContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(CaquiScriptParser.ID, 0); }
 		public TerminalNode NUMBER() { return getToken(CaquiScriptParser.NUMBER, 0); }
+		public TerminalNode STRING() { return getToken(CaquiScriptParser.STRING, 0); }
 		public TermoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1721,7 +1719,7 @@ public class CaquiScriptParser extends Parser {
 		TermoContext _localctx = new TermoContext(_ctx, getState());
 		enterRule(_localctx, 30, RULE_termo);
 		try {
-			setState(265);
+			setState(267);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ID:
@@ -1730,7 +1728,7 @@ public class CaquiScriptParser extends Parser {
 				setState(261);
 				match(ID);
 				 verificaID(_input.LT(-1).getText()); 
-							 	_exprContent += _input.LT(-1).getText();
+								_exprContent += _input.LT(-1).getText();
 							 
 				}
 				break;
@@ -1739,6 +1737,14 @@ public class CaquiScriptParser extends Parser {
 				{
 				setState(263);
 				match(NUMBER);
+				 _exprContent += _input.LT(-1).getText(); 
+				}
+				break;
+			case STRING:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(265);
+				match(STRING);
 				 _exprContent += _input.LT(-1).getText(); 
 				}
 				break;
@@ -1758,7 +1764,7 @@ public class CaquiScriptParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3!\u010e\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3!\u0110\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\3\2\3\2\5"+
 		"\2%\n\2\3\2\3\2\3\2\3\2\3\3\6\3,\n\3\r\3\16\3-\3\4\3\4\3\4\3\4\3\4\3\4"+
@@ -1773,15 +1779,15 @@ public class CaquiScriptParser extends Parser {
 		"\3\r\3\r\3\r\3\r\5\r\u00b5\n\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00bd\n\r\3"+
 		"\r\6\r\u00c0\n\r\r\r\16\r\u00c1\3\r\3\r\3\r\3\16\3\16\3\16\3\16\3\16\3"+
 		"\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3"+
-		"\16\3\16\5\16\u00dc\n\16\3\16\6\16\u00df\n\16\r\16\16\16\u00e0\3\16\3"+
-		"\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u00ee\n\17\3\17"+
-		"\3\17\3\17\3\17\3\17\5\17\u00f5\n\17\3\17\5\17\u00f8\n\17\3\20\3\20\3"+
-		"\20\3\20\3\20\3\20\3\20\7\20\u0101\n\20\f\20\16\20\u0104\13\20\3\20\3"+
-		"\20\3\21\3\21\3\21\3\21\5\21\u010c\n\21\3\21\2\2\22\2\4\6\b\n\f\16\20"+
-		"\22\24\26\30\32\34\36 \2\6\4\2\35\35  \3\2\36 \3\2\34\35\3\2\17\22\2\u011f"+
+		"\16\3\16\3\16\5\16\u00dd\n\16\3\16\3\16\6\16\u00e1\n\16\r\16\16\16\u00e2"+
+		"\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u00f1"+
+		"\n\17\3\17\3\17\3\17\3\17\3\17\5\17\u00f8\n\17\3\17\5\17\u00fb\n\17\3"+
+		"\20\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u0104\n\20\3\20\3\20\3\21\3\21"+
+		"\3\21\3\21\3\21\3\21\5\21\u010e\n\21\3\21\2\2\22\2\4\6\b\n\f\16\20\22"+
+		"\24\26\30\32\34\36 \2\6\4\2\35\35  \3\2\36 \3\2\34\35\3\2\17\22\2\u0122"+
 		"\2\"\3\2\2\2\4+\3\2\2\2\6/\3\2\2\2\bP\3\2\2\2\nR\3\2\2\2\fT\3\2\2\2\16"+
 		"a\3\2\2\2\20c\3\2\2\2\22k\3\2\2\2\24z\3\2\2\2\26\u0082\3\2\2\2\30\u00a9"+
-		"\3\2\2\2\32\u00c6\3\2\2\2\34\u00f7\3\2\2\2\36\u00f9\3\2\2\2 \u010b\3\2"+
+		"\3\2\2\2\32\u00c6\3\2\2\2\34\u00fa\3\2\2\2\36\u00fc\3\2\2\2 \u010d\3\2"+
 		"\2\2\"$\7\3\2\2#%\5\4\3\2$#\3\2\2\2$%\3\2\2\2%&\3\2\2\2&\'\5\f\7\2\'("+
 		"\7\4\2\2()\b\2\1\2)\3\3\2\2\2*,\5\6\4\2+*\3\2\2\2,-\3\2\2\2-+\3\2\2\2"+
 		"-.\3\2\2\2.\5\3\2\2\2/\60\5\b\5\2\60\61\7\34\2\2\619\b\4\1\2\62\67\7\33"+
@@ -1823,29 +1829,30 @@ public class CaquiScriptParser extends Parser {
 		"\u00c0\u00c1\3\2\2\2\u00c1\u00bf\3\2\2\2\u00c1\u00c2\3\2\2\2\u00c2\u00c3"+
 		"\3\2\2\2\u00c3\u00c4\7\26\2\2\u00c4\u00c5\b\r\1\2\u00c5\31\3\2\2\2\u00c6"+
 		"\u00c7\7\r\2\2\u00c7\u00c8\7\23\2\2\u00c8\u00c9\5\6\4\2\u00c9\u00ca\b"+
-		"\16\1\2\u00ca\u00cb\7\16\2\2\u00cb\u00cc\5 \21\2\u00cc\u00cd\b\16\1\2"+
+		"\16\1\2\u00ca\u00cb\7\16\2\2\u00cb\u00cc\7\34\2\2\u00cc\u00cd\b\16\1\2"+
 		"\u00cd\u00ce\7\30\2\2\u00ce\u00cf\b\16\1\2\u00cf\u00d0\5 \21\2\u00d0\u00d1"+
 		"\b\16\1\2\u00d1\u00d2\3\2\2\2\u00d2\u00d3\7\16\2\2\u00d3\u00d4\7\34\2"+
 		"\2\u00d4\u00d5\b\16\1\2\u00d5\u00d6\7\31\2\2\u00d6\u00d7\b\16\1\2\u00d7"+
-		"\u00d8\3\2\2\2\u00d8\u00d9\7\24\2\2\u00d9\u00db\7\25\2\2\u00da\u00dc\5"+
-		"\6\4\2\u00db\u00da\3\2\2\2\u00db\u00dc\3\2\2\2\u00dc\u00de\3\2\2\2\u00dd"+
-		"\u00df\5\16\b\2\u00de\u00dd\3\2\2\2\u00df\u00e0\3\2\2\2\u00e0\u00de\3"+
-		"\2\2\2\u00e0\u00e1\3\2\2\2\u00e1\u00e2\3\2\2\2\u00e2\u00e3\7\26\2\2\u00e3"+
-		"\33\3\2\2\2\u00e4\u00e5\7 \2\2\u00e5\u00f8\b\17\1\2\u00e6\u00e7\7 \2\2"+
-		"\u00e7\u00ed\b\17\1\2\u00e8\u00e9\7\27\2\2\u00e9\u00ea\b\17\1\2\u00ea"+
-		"\u00eb\5 \21\2\u00eb\u00ec\b\17\1\2\u00ec\u00ee\3\2\2\2\u00ed\u00e8\3"+
-		"\2\2\2\u00ed\u00ee\3\2\2\2\u00ee\u00f4\3\2\2\2\u00ef\u00f0\7\17\2\2\u00f0"+
-		"\u00f1\b\17\1\2\u00f1\u00f2\5 \21\2\u00f2\u00f3\b\17\1\2\u00f3\u00f5\3"+
-		"\2\2\2\u00f4\u00ef\3\2\2\2\u00f4\u00f5\3\2\2\2\u00f5\u00f6\3\2\2\2\u00f6"+
-		"\u00f8\b\17\1\2\u00f7\u00e4\3\2\2\2\u00f7\u00e6\3\2\2\2\u00f8\35\3\2\2"+
-		"\2\u00f9\u00fa\5 \21\2\u00fa\u0102\b\20\1\2\u00fb\u00fc\t\5\2\2\u00fc"+
-		"\u00fd\b\20\1\2\u00fd\u00fe\5 \21\2\u00fe\u00ff\b\20\1\2\u00ff\u0101\3"+
-		"\2\2\2\u0100\u00fb\3\2\2\2\u0101\u0104\3\2\2\2\u0102\u0100\3\2\2\2\u0102"+
-		"\u0103\3\2\2\2\u0103\u0105\3\2\2\2\u0104\u0102\3\2\2\2\u0105\u0106\b\20"+
-		"\1\2\u0106\37\3\2\2\2\u0107\u0108\7\34\2\2\u0108\u010c\b\21\1\2\u0109"+
-		"\u010a\7\35\2\2\u010a\u010c\b\21\1\2\u010b\u0107\3\2\2\2\u010b\u0109\3"+
-		"\2\2\2\u010c!\3\2\2\2\34$-\679@DHPXau\u0090\u0095\u009d\u00a2\u00a7\u00b4"+
-		"\u00bc\u00c1\u00db\u00e0\u00ed\u00f4\u00f7\u0102\u010b";
+		"\u00d8\3\2\2\2\u00d8\u00d9\7\24\2\2\u00d9\u00da\7\25\2\2\u00da\u00dc\b"+
+		"\16\1\2\u00db\u00dd\5\6\4\2\u00dc\u00db\3\2\2\2\u00dc\u00dd\3\2\2\2\u00dd"+
+		"\u00de\3\2\2\2\u00de\u00e0\b\16\1\2\u00df\u00e1\5\16\b\2\u00e0\u00df\3"+
+		"\2\2\2\u00e1\u00e2\3\2\2\2\u00e2\u00e0\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3"+
+		"\u00e4\3\2\2\2\u00e4\u00e5\7\26\2\2\u00e5\u00e6\b\16\1\2\u00e6\33\3\2"+
+		"\2\2\u00e7\u00e8\7 \2\2\u00e8\u00fb\b\17\1\2\u00e9\u00ea\7 \2\2\u00ea"+
+		"\u00f0\b\17\1\2\u00eb\u00ec\7\27\2\2\u00ec\u00ed\b\17\1\2\u00ed\u00ee"+
+		"\5 \21\2\u00ee\u00ef\b\17\1\2\u00ef\u00f1\3\2\2\2\u00f0\u00eb\3\2\2\2"+
+		"\u00f0\u00f1\3\2\2\2\u00f1\u00f7\3\2\2\2\u00f2\u00f3\7\17\2\2\u00f3\u00f4"+
+		"\b\17\1\2\u00f4\u00f5\5 \21\2\u00f5\u00f6\b\17\1\2\u00f6\u00f8\3\2\2\2"+
+		"\u00f7\u00f2\3\2\2\2\u00f7\u00f8\3\2\2\2\u00f8\u00f9\3\2\2\2\u00f9\u00fb"+
+		"\b\17\1\2\u00fa\u00e7\3\2\2\2\u00fa\u00e9\3\2\2\2\u00fb\35\3\2\2\2\u00fc"+
+		"\u00fd\5 \21\2\u00fd\u0103\b\20\1\2\u00fe\u00ff\t\5\2\2\u00ff\u0100\b"+
+		"\20\1\2\u0100\u0101\5 \21\2\u0101\u0102\b\20\1\2\u0102\u0104\3\2\2\2\u0103"+
+		"\u00fe\3\2\2\2\u0103\u0104\3\2\2\2\u0104\u0105\3\2\2\2\u0105\u0106\b\20"+
+		"\1\2\u0106\37\3\2\2\2\u0107\u0108\7\34\2\2\u0108\u010e\b\21\1\2\u0109"+
+		"\u010a\7\35\2\2\u010a\u010e\b\21\1\2\u010b\u010c\7 \2\2\u010c\u010e\b"+
+		"\21\1\2\u010d\u0107\3\2\2\2\u010d\u0109\3\2\2\2\u010d\u010b\3\2\2\2\u010e"+
+		"!\3\2\2\2\34$-\679@DHPXau\u0090\u0095\u009d\u00a2\u00a7\u00b4\u00bc\u00c1"+
+		"\u00dc\u00e2\u00f0\u00f7\u00fa\u0103\u010d";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

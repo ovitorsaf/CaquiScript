@@ -4,11 +4,12 @@ start
 	double b;
 	string t1, x;
 	string texto = "meu texto";
+	texto = "meeeu texto";
 
 	read(a);
 	read(b);
 	
-	a = 1 + 2 * 3 / b;
+	a = 1 * 2;
 	
 	if (a > b)
 	{
@@ -21,6 +22,7 @@ start
 	else {
 		write(x);
 		string saulo = "saulo";
+		write(texto);
 	}
 	
 	write(a + b);
@@ -39,8 +41,8 @@ start
 	}
 	
 	
-	for(int yy = 1; yy < 20; yy++){
-		write(yy);
+	for(int forvariable = 0; forvariable < 20; forvariable++){
+		write("ForVariable = " + forvariable);
 	}
 	
 end;
