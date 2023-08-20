@@ -14,24 +14,25 @@ double  xxx;
 String  zzzzz;
 double  bala;
 String  t1;
+b = 0.1;
+t1 = "var_t1";
+x = "var_x";
 texto = "meeeu texto";
-a = _key.nextInteger();
+a = _key.nextInt();
 b = _key.nextDouble();
 a = 1*2;
 if (a>=b) { 
-double xxx;
 xxx = 0.287;bala = 1.99;System.out.println(t1);}else { 
 System.out.println(x);System.out.println(texto);} 
 
 System.out.println(a+b);
 System.out.println(20);
 System.out.println("macaxeira");
-System.out.println("resultado :", a);
+System.out.println("resultado :"+a);
 while (a<b) { 
-String abc;
-abc = 50;System.out.println("dentro do while"+abc);
+abc = "50";System.out.println("dentro do while"+abc);
 }
-for (int forvariable = 0; forvariable<20; forvariable++){
+for (forvariable = 0; forvariable<20; forvariable++){
 System.out.println("ForVariable = "+forvariable);
 }
   } 

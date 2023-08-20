@@ -334,9 +334,9 @@ ifStatement	: 'if' AP
 				   }
 				   (declvar
 					   	{
-				  			System.out.println("if -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
-				  			CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
-				  			stack.peek().add(dclvar);
+				  			//System.out.println("if -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
+				  			//CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
+				  			//stack.peek().add(dclvar);
 				  		}
 				   )?
 				   (cmd)+ 
@@ -392,9 +392,9 @@ whileLoop	: 'while' AP
 				   		}
 					  	(declvar
 					  		{
-					  			System.out.println("while -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
-					  			CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
-					  			stack.peek().add(dclvar);
+					  			//System.out.println("while -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
+					  			//CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
+					  			//stack.peek().add(dclvar);
 					  		}
 					  	)?
 					  	(cmd)+
@@ -412,7 +412,7 @@ forLoop	: 'for'
 		  	(declvar) 
 		  	{
 		  		System.out.println("for -> Declaração = " + getDeclVarType() + " " + getDeclVarName() + " = " + getDeclVarValue());
-	  			_forInitialVar = getDeclVarType() + " " + getDeclVarName() + " = " + getDeclVarValue();
+	  			_forInitialVar = getDeclVarName() + " = " + getDeclVarValue();
 		  	}
 		  	SC 
 		  	(ID 
@@ -599,6 +599,17 @@ checkVars	:
 			    for(String var : declaredVariables) {
 			        System.out.println("ALERTA - USO: Variável " + var + " foi declarada mas não foi usada.");
 			    }
+			    
+			    
+			    if(newUsedVariables.size() > 0){
+					if(newUsedVariables.size() == 1){
+						throw new CaquiSemanticException("Variável " + newUsedVariables.toString() + " não foi inicializada");
+					}
+					else{
+						throw new CaquiSemanticException("Variáveis  " + newUsedVariables.toString() + " não foram inicializadas");
+					}
+					
+				}
 			}
 			;
 

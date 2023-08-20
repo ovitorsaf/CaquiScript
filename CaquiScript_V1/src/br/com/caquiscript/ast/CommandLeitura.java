@@ -15,7 +15,7 @@ public class CommandLeitura extends AbstractCommand{
 	@Override
 	public String generateJavaCode() {
 		if (var.getType()==CaquiVariable.INT) {
-			return id + " = _key.nextInteger();";
+			return id + " = _key.nextInt();";
 		}
 		else if (var.getType()==CaquiVariable.DOUBLE) {
 			return id + " = _key.nextDouble();";

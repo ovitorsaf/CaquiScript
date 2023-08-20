@@ -2,11 +2,17 @@ start
 
 	int a;
 	double b;
-	string t1, x, zzzzz;
-	string texto = "meu texto";
+	string t1;
+	string x;
+	string zzzzz;
+	string texto;
+	int naoVaiSerUsada;
+	
+	b = 0.1;
+	t1 = "var_t1";
+	x = "var_x";
 	texto = "meeeu texto";
 	
-	int naoVaiSerUsada;
 
 	read(a);
 	read(b);
@@ -34,12 +40,12 @@ start
 	
 	write("macaxeira");
 	
-	write("resultado :", a);
+	write("resultado :" + a);
 	
 	
 	while (a < b){
 		string abc;
-		abc = 50;
+		abc = "50";
 		write("dentro do while" + abc);
 	}
 	

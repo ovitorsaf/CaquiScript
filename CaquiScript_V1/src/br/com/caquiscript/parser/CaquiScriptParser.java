@@ -1151,9 +1151,9 @@ public class CaquiScriptParser extends Parser {
 				setState(142);
 				declvar();
 
-								  			System.out.println("if -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
-								  			CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
-								  			stack.peek().add(dclvar);
+								  			//System.out.println("if -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
+								  			//CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
+								  			//stack.peek().add(dclvar);
 								  		
 				}
 				break;
@@ -1340,9 +1340,9 @@ public class CaquiScriptParser extends Parser {
 				setState(186);
 				declvar();
 
-									  			System.out.println("while -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
-									  			CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
-									  			stack.peek().add(dclvar);
+									  			//System.out.println("while -> Declaração = " + getDeclVarType() + " " + getDeclVarName());
+									  			//CommandDeclVar dclvar = new CommandDeclVar(getDeclVarType(), getDeclVarName());
+									  			//stack.peek().add(dclvar);
 									  		
 				}
 				break;
@@ -1443,7 +1443,7 @@ public class CaquiScriptParser extends Parser {
 			}
 
 					  		System.out.println("for -> Declaração = " + getDeclVarType() + " " + getDeclVarName() + " = " + getDeclVarValue());
-				  			_forInitialVar = getDeclVarType() + " " + getDeclVarName() + " = " + getDeclVarValue();
+				  			_forInitialVar = getDeclVarName() + " = " + getDeclVarValue();
 					  	
 			setState(203);
 			match(SC);
@@ -1879,6 +1879,17 @@ public class CaquiScriptParser extends Parser {
 						    for(String var : declaredVariables) {
 						        System.out.println("ALERTA - USO: Variável " + var + " foi declarada mas não foi usada.");
 						    }
+						    
+						    
+						    if(newUsedVariables.size() > 0){
+								if(newUsedVariables.size() == 1){
+									throw new CaquiSemanticException("Variável " + newUsedVariables.toString() + " não foi inicializada");
+								}
+								else{
+									throw new CaquiSemanticException("Variáveis  " + newUsedVariables.toString() + " não foram inicializadas");
+								}
+								
+							}
 						
 			}
 		}
