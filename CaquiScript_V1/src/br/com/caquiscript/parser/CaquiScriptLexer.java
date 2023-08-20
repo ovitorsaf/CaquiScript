@@ -134,6 +134,7 @@ public class CaquiScriptLexer extends Lexer {
 		 
 		Set<String> declaredVariables = new HashSet<String>();
 	    Set<String> usedVariables = new HashSet<String>();
+		Set<String> referencedVariables = new HashSet<String>();
 
 
 		public void verificaID(String id){

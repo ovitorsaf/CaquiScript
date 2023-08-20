@@ -142,6 +142,7 @@ public class CaquiScriptParser extends Parser {
 		 
 		Set<String> declaredVariables = new HashSet<String>();
 	    Set<String> usedVariables = new HashSet<String>();
+		Set<String> referencedVariables = new HashSet<String>();
 
 
 		public void verificaID(String id){
@@ -441,6 +442,7 @@ public class CaquiScriptParser extends Parser {
 															symbol.setValue(str);
 															//setDeclVarName("joab manoel gome");
 															setDeclVarValue(str);
+															referencedVariables.add(symbol.getName());
 															System.out.println("var = " + symbol.getName() + " | valor = " + getDeclVarValue());
 														}
 														
@@ -465,6 +467,7 @@ public class CaquiScriptParser extends Parser {
 															symbol.setValue(numberString);
 															//setDeclVarName(numberString);
 															setDeclVarValue(numberString);
+															referencedVariables.add(symbol.getName());
 															System.out.println(symbol.getName() + " = " + getDeclVarValue());
 														}
 														
@@ -1032,6 +1035,10 @@ public class CaquiScriptParser extends Parser {
 						   
 						   //Add variavel no usedVariables
 						   usedVariables.add(_input.LT(-1).getText());
+						   
+						   //Add variavel no referencedVariables	
+						   referencedVariables.add(_input.LT(-1).getText());
+						   System.out.println("Variável " + _input.LT(-1).getText() + " referenciada");
 						 
 			setState(125);
 			match(ATTR);
@@ -1824,11 +1831,49 @@ public class CaquiScriptParser extends Parser {
 			{
 
 							System.out.println("EXECUTANDO CHECKVARS");
-				    
+							
+							for(String var : declaredVariables){
+								System.out.println("Variável declarada -> " + var);
+							}
+							
+							for(String var : referencedVariables){
+								System.out.println("Variável referenciada -> " + var);
+							}
+							
+							for(String var : usedVariables){
+								System.out.println("Variável usada -> " + var);
+							}
+							
+							
+							// Crie um iterador para percorrer a lista de usedVariables
+			        		Iterator<String> iterator = usedVariables.iterator();
+			        		
+			        		 char aspas = '"';
+						        		
+				    		 while (iterator.hasNext()) {
+					            String elemento = iterator.next();
+					            if (elemento.matches("^[0-9].*") | elemento.startsWith(String.valueOf(aspas))) {
+					                iterator.remove();
+					            }
+					        }
+					        
+					        for (String elemento : usedVariables) {
+					            System.out.println("Variaveis usadas tratada -> " + elemento);
+					        }
+							
+							Set<String> newUsedVariables = new HashSet<String>();
+							for(String str : usedVariables){
+								newUsedVariables.add(str);
+							}
+							
+							newUsedVariables.removeAll(referencedVariables);
+							for(String var : newUsedVariables){
+								System.out.println("ALERTA - VALOR: Variável " + var + " está sendo usada sem ter valor inicial");
+							}
+
 						    declaredVariables.removeAll(usedVariables);
-						    
 						    for(String var : declaredVariables) {
-						        System.out.println("ALERTA: Variável " + var + " foi declarada mas não foi usada.");
+						        System.out.println("ALERTA - USO: Variável " + var + " foi declarada mas não foi usada.");
 						    }
 						
 			}

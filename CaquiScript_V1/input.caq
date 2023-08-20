@@ -2,7 +2,7 @@ start
 
 	int a;
 	double b;
-	string t1, x;
+	string t1, x, zzzzz;
 	string texto = "meu texto";
 	texto = "meeeu texto";
 	

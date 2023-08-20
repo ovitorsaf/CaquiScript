@@ -1,6 +1,7 @@
 - Terminar o FOR -> OK
 - Verificar se a variável foi declarada e não foi usada -> OK
-- Verificar se uma variável está sendo usada sem ter valor inicial
+- Verificar se uma variável está sendo usada sem ter valor inicial -> OK
+- Verificar se a variável já foi previamente declarada
 - Inserção de Operadores lógicos
 - Geração de várias linguagens-alvo (C ou Python)
 - Avaliador de expressões aritméticas
