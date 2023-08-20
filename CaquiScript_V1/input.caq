@@ -11,9 +11,10 @@ start
 	read(a);
 	read(b);
 	
+	
 	a = 1 * 2;
 	
-	if (a > b)
+	if (a >= b)
 	{
 		double xxx;
 		xxx = 0.287;

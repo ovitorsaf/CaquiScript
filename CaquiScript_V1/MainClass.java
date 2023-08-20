@@ -11,13 +11,14 @@ int  naoVaiSerUsada;
 String  x;
 String  saulo;
 double  xxx;
+String  zzzzz;
 double  bala;
 String  t1;
 texto = "meeeu texto";
 a = _key.nextInteger();
 b = _key.nextDouble();
 a = 1*2;
-if (a>b) { 
+if (a>=b) { 
 double xxx;
 xxx = 0.287;bala = 1.99;System.out.println(t1);}else { 
 System.out.println(x);System.out.println(texto);} 

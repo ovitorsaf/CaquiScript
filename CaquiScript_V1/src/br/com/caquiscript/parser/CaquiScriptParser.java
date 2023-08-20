@@ -1832,6 +1832,7 @@ public class CaquiScriptParser extends Parser {
 
 							System.out.println("EXECUTANDO CHECKVARS");
 							
+							/*
 							for(String var : declaredVariables){
 								System.out.println("Variável declarada -> " + var);
 							}
@@ -1843,6 +1844,7 @@ public class CaquiScriptParser extends Parser {
 							for(String var : usedVariables){
 								System.out.println("Variável usada -> " + var);
 							}
+							*/
 							
 							
 							// Crie um iterador para percorrer a lista de usedVariables
@@ -1857,9 +1859,11 @@ public class CaquiScriptParser extends Parser {
 					            }
 					        }
 					        
+					        /*
 					        for (String elemento : usedVariables) {
 					            System.out.println("Variaveis usadas tratada -> " + elemento);
 					        }
+					        */
 							
 							Set<String> newUsedVariables = new HashSet<String>();
 							for(String str : usedVariables){

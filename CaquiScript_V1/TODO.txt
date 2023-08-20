@@ -1,8 +1,28 @@
 - Terminar o FOR -> OK
 - Verificar se a variável foi declarada e não foi usada -> OK
 - Verificar se uma variável está sendo usada sem ter valor inicial -> OK
-- Verificar se a variável já foi previamente declarada
-- Inserção de Operadores lógicos
+- Verificar se a variável já foi previamente declarada -> Ok
+- Inserção de Operadores lógicos -> Ok
 - Geração de várias linguagens-alvo (C ou Python)
 - Avaliador de expressões aritméticas
 - Editor Highlight (simulando uma pequena IDE)
+
+Itens Obrigatórios:
+1 Possui 2 tipos de variáveis - OK
+2 Possui a estrutura If.. else - OK
+3 Possui estrutura de controle while/do while - OK
+4 Operações Aritméticas executadas corretamente - ?
+5 Atribuições realizadas corretamente - OK
+6 Possui operações de Entrada e Saída - OK
+7 Aceita números decimais - OK
+8 Verificar se a variável já foi previamente declarada - OK
+9 Verificar se a variável foi declarada e não foi usada - OK
+10 Verificar se uma variável está sendo usada sem ter valor inicial - PK
+
+Itens Opcionais:
+1 Editor Highlight (simulando uma pequena IDE) 3
+2 Avaliador de expressões aritméticas 3 -> ?
+3 Inserção de Operadores lógicos 2 -> OK
+4 Geração de várias linguagens-alvo 3 -> ?
+5 Uma API Rest para implementação do compilador 4
+6 Um Interpretador (runtime) para a linguagem
